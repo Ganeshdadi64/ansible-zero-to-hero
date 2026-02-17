@@ -52,7 +52,7 @@ When you create a role:
 ansible-galaxy init nginx
 
 It creates:
-
+```
 nginx/
 ├── tasks/
 │   └── main.yml
@@ -63,7 +63,7 @@ nginx/
 ├── vars/
 ├── defaults/
 └── meta/
-
+```
 
 ## Key Components of an Ansible Role
 
