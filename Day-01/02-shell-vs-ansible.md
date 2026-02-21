@@ -2,7 +2,7 @@
 
 🔹 Step 1: What is Shell Script?
 
-Shell script = just a list of commands.
+Shell script = just a list of commands in .sh files 
 
 Example:
 
