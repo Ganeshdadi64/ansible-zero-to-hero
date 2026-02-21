@@ -1,0 +1,158 @@
+
+```
+REGULAR TASKS DONE USING ANSIBLE IN PRODUCTION
+
+=========================================================
+1) SERVER PROVISIONING
+=========================================================
+
+- Install required packages (nginx, apache, docker, java, python)
+- Create users and groups
+- Configure sudo access
+- Set timezone and hostname
+- Configure SSH settings
+- Install security updates
+
+Example:
+- Install nginx
+- Create deployment user
+- Disable root SSH login
+
+=========================================================
+2) APPLICATION DEPLOYMENT
+=========================================================
+
+- Pull code from Git
+- Install dependencies
+- Configure environment variables
+- Restart services
+- Deploy WAR/JAR files
+- Deploy Docker containers
+
+Example:
+- Copy application files to /opt/app
+- Restart systemd service
+- Run database migrations
+
+=========================================================
+3) CONFIGURATION MANAGEMENT
+=========================================================
+
+- Manage config files (/etc/nginx/nginx.conf)
+- Update application properties
+- Modify system configuration
+- Maintain consistent setup across 100+ servers
+
+Ensures:
+All servers have identical configuration.
+
+=========================================================
+4) SERVICE MANAGEMENT
+=========================================================
+
+- Start services
+- Stop services
+- Restart services
+- Enable services at boot
+
+Example:
+- Restart nginx after config change
+- Enable docker service
+
+=========================================================
+5) SECURITY HARDENING
+=========================================================
+
+- Disable root login
+- Enforce password policies
+- Install security patches
+- Configure firewall (ufw, iptables)
+- Rotate SSH keys
+
+=========================================================
+6) DATABASE MANAGEMENT
+=========================================================
+
+- Install MySQL/PostgreSQL
+- Create databases
+- Create DB users
+- Backup databases
+- Restore backups
+
+=========================================================
+7) LOG MANAGEMENT
+=========================================================
+
+- Configure log rotation
+- Install monitoring agents
+- Ship logs to ELK / Splunk
+- Clean old log files
+
+=========================================================
+8) CLOUD AUTOMATION
+=========================================================
+
+- Launch EC2 instances
+- Attach EBS volumes
+- Create S3 buckets
+- Configure Load Balancers
+- Manage security groups
+
+(Using collections like amazon.aws)
+
+=========================================================
+9) PATCH MANAGEMENT
+=========================================================
+
+- Run OS updates on all servers
+- Reboot machines if required
+- Ensure zero downtime using rolling updates
+
+=========================================================
+10) MULTI-SERVER ORCHESTRATION
+=========================================================
+
+Example production scenario:
+
+Step 1: Stop application servers
+Step 2: Deploy new version
+Step 3: Run DB migration
+Step 4: Start application
+Step 5: Verify health check
+
+All automated with one playbook.
+
+=========================================================
+REAL PRODUCTION FLOW
+=========================================================
+
+Developer pushes code
+        ↓
+CI/CD pipeline triggers
+        ↓
+Ansible runs playbook
+        ↓
+Application deployed on 10+ servers
+        ↓
+Load balancer routes traffic
+        ↓
+Zero downtime deployment
+
+=========================================================
+WHY COMPANIES USE ANSIBLE
+=========================================================
+
+- Idempotent (safe to run multiple times)
+- Agentless (no agent installation required)
+- Easy YAML syntax
+- Works across Linux, Windows, Cloud
+- Good for configuration consistency
+
+=========================================================
+ONE LINE SUMMARY
+=========================================================
+
+In production, Ansible is used to configure servers, deploy applications, manage services, enforce security, and automate infrastructure across multiple machines.
+
+
+```
