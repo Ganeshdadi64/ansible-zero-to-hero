@@ -1,0 +1,168 @@
+```
+ANSIBLE TO EC2 COMPLETE WORKING FLOW (WITH ERRORS & FIXES)
+
+=========================================================
+PHASE 1: EC2 SETUP
+=========================================================
+
+1) Launch EC2 (Ubuntu)
+2) Download .pem key file
+3) Open Security Group:
+   - Allow port 22 (SSH)
+   - Allow port 80 (HTTP)
+
+Common Errors:
+- Permission denied (publickey)
+  Reason: Wrong key OR wrong username
+  Fix: Use correct key and ubuntu user
+
+- Connection timed out
+  Reason: Port 22 not open in Security Group
+  Fix: Allow SSH in Security Group
+
+=========================================================
+PHASE 2: CODESPACE SETUP
+=========================================================
+
+1) Install Ansible:
+   sudo apt update
+   sudo apt install ansible -y
+
+2) Upload PEM file into Codespace
+
+3) Fix key permission:
+   chmod 400 Docker.pem
+
+Common Error:
+WARNING: UNPROTECTED PRIVATE KEY FILE!
+Permissions 0666 are too open.
+
+Reason:
+SSH does not allow open permission on private key.
+
+Fix:
+chmod 400 Docker.pem
+
+=========================================================
+PHASE 3: INVENTORY CONFIGURATION
+=========================================================
+
+Correct inventory format:
+
+[web]
+52.65.74.208 ansible_user=ubuntu ansible_ssh_private_key_file=Docker.pem
+
+Test connection:
+ansible -i inventory.ini web -m ping
+
+Expected Output:
+SUCCESS
+"ping": "pong"
+
+Common Errors:
+
+1) Could not match supplied host pattern
+   Reason: Group name missing in inventory
+   Fix: Add [web] group
+
+2) No hosts matched
+   Reason: Wrong group name OR empty inventory
+   Fix: Verify group and IP
+
+3) Unable to parse inventory.ini
+   Reason: Running command from wrong folder
+   Fix: Use correct path
+     ansible-playbook -i ../inventory.ini playbook.yml
+
+=========================================================
+PHASE 4: RUN PLAYBOOK
+=========================================================
+
+Playbook Example:
+
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install apache httpd
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Copy file
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+
+Run command:
+ansible-playbook -i inventory.ini apache.yml
+
+Expected Output:
+changed=2
+failed=0
+
+=========================================================
+COMMON PLAYBOOK ERRORS
+=========================================================
+
+1) Permission denied (sudo issue)
+   Reason: become not enabled
+   Fix: Add become: true
+
+2) Module failure (apt not found)
+   Reason: Using Amazon Linux instead of Ubuntu
+   Fix: Use yum module instead of apt
+
+3) File not found (index.html)
+   Reason: File not in same directory
+   Fix: Create file OR give correct path
+
+=========================================================
+HOW THE FULL FLOW WORKS
+=========================================================
+
+GitHub Codespace
+        ↓
+Ansible Installed
+        ↓
+Inventory Configured
+        ↓
+SSH Connects Using PEM
+        ↓
+Ansible Executes Modules via Python
+        ↓
+Apache Installed
+        ↓
+HTML File Copied
+        ↓
+Access via Browser
+http://52.65.74.208
+
+=========================================================
+FINAL SUCCESS INDICATOR
+=========================================================
+
+1) ansible -m ping → SUCCESS
+2) ansible-playbook → changed > 0 and failed=0
+3) Browser shows webpage
+
+=========================================================
+IMPORTANT DEVOPS LEARNINGS
+=========================================================
+
+- Always fix PEM permission (chmod 400)
+- Always define inventory group
+- Always check correct directory
+- Always test SSH manually first
+- Ansible needs Python on remote machine
+- Security Group must allow SSH and HTTP
+
+=========================================================
+ONE LINE SUMMARY
+=========================================================
+```
+Codespace → SSH → Ansible → EC2 → Install Apache → Deploy Website Successfully
