@@ -164,5 +164,6 @@ IMPORTANT DEVOPS LEARNINGS
 =========================================================
 ONE LINE SUMMARY
 =========================================================
-```
 Codespace → SSH → Ansible → EC2 → Install Apache → Deploy Website Successfully
+
+```
