@@ -167,3 +167,161 @@ ONE LINE SUMMARY
 Codespace → SSH → Ansible → EC2 → Install Apache → Deploy Website Successfully
 
 ```
+
+
+
+```
+
+=========================================================
+SCENARIO:
+You have a backend JAR file.
+You want to deploy it in AWS.
+=========================================================
+
+STEP-BY-STEP FLOW IN REAL PRODUCTION
+
+=========================================================
+PART 1 — WHAT TERRAFORM HANDLES
+=========================================================
+
+Terraform = Infrastructure Provisioning Tool
+(It creates cloud resources)
+
+Terraform will create:
+
+1) VPC
+2) Subnets
+3) Internet Gateway
+4) Security Groups
+5) EC2 Instance OR Auto Scaling Group
+6) Load Balancer (ALB)
+7) IAM Roles
+8) S3 (if needed)
+9) RDS (if database needed)
+10) EKS cluster (if using Kubernetes)
+
+Terraform DOES NOT:
+- Install Java
+- Copy JAR file
+- Start application
+- Configure system services
+
+Terraform stops after infrastructure is ready.
+
+=========================================================
+PART 2 — WHAT ANSIBLE HANDLES
+=========================================================
+
+Ansible = Configuration Management Tool
+(It configures servers after they are created)
+
+Ansible will:
+
+1) Connect to EC2 using SSH
+2) Install Java
+3) Create application directory
+4) Copy JAR file
+5) Create systemd service file
+6) Start application
+7) Restart app on failure
+8) Configure environment variables
+
+Ansible DOES NOT:
+- Create VPC
+- Create EC2
+- Create Load Balancer
+- Create IAM roles
+
+=========================================================
+REAL FLOW IN COMPANY
+=========================================================
+
+Step 1:
+Terraform → creates infrastructure
+
+Step 2:
+Ansible → configures EC2 and deploys JAR
+
+Step 3:
+CI/CD pipeline → automatically triggers both
+
+=========================================================
+IF USING KUBERNETES (EKS)
+=========================================================
+
+Terraform:
+- Create EKS
+- Create node groups
+
+Then you DO NOT use Ansible for JAR.
+
+Instead:
+
+- Build Docker image
+- Push to ECR
+- Deploy using Kubernetes YAML or Helm
+
+=========================================================
+SIMPLE COMPARISON
+=========================================================
+
+Terraform = Builds the house
+Ansible = Arranges furniture inside
+
+Terraform = Creates server
+Ansible = Makes server usable
+
+Terraform = Cloud layer
+Ansible = OS/Application layer
+
+=========================================================
+WHEN YOU DEPLOY JAR ON EC2
+=========================================================
+
+Terraform creates:
+- EC2
+- Security group
+- Load balancer
+
+Ansible:
+- Installs Java
+- Deploys JAR
+- Starts service
+
+=========================================================
+WHEN YOU DEPLOY JAR ON EKS
+=========================================================
+
+Terraform:
+- EKS cluster
+
+Ansible:
+- Not required usually
+
+Instead:
+Docker + Kubernetes handles deployment
+
+=========================================================
+IMPORTANT INDUSTRY RULE
+=========================================================
+
+Terraform = Provisioning
+Ansible = Configuration
+Kubernetes = Container Orchestration
+CI/CD = Automation trigger
+
+=========================================================
+FINAL SUMMARY
+=========================================================
+
+If deploying JAR on EC2:
+
+Terraform + Ansible
+
+If deploying JAR on Kubernetes:
+
+Terraform + Docker + Kubernetes
+
+=========================================================
+
+```
