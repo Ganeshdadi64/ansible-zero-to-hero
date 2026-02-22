@@ -1,0 +1,5 @@
+```
+-host:all
+ become:true
+ roles:
+   -prajwalrai25.docker
